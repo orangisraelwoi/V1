@@ -12,19 +12,15 @@ async function fetchProducts() {
         return
     }
 
-    if (!products || products.length === 0) {
-        alert('Database kosong, belum ada produk')
-        return
-    }
-
     const productList = document.getElementById('product-list')
     productList.innerHTML = ''
 
     products.forEach(product => {
         const card = document.createElement('div')
         card.className = 'card'
+        // Kita pakai path relatif ./drip.jpeg biar browser tau lokasinya
         card.innerHTML = `
-            <img src="drip.jpeg" class="card-img" style="object-fit: cover;">
+            <img src="./drip.jpeg" alt="Drip" class="card-img" style="object-fit: cover;">
             <div class="card-body">
                 <div class="card-title">${product.name}</div>
                 <div class="card-price">Rp ${product.price.toLocaleString()}</div>
