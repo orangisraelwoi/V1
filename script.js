@@ -7,7 +7,7 @@ const products = [
         sold: "1.2k+ Terjual",
         rating: "4.7 (86)",
         badge: "ANDROID",
-        imageUrl: "drip.jpg", 
+        imageUrl: "drip.jpeg", 
         imageText: "DRIP"
     },
     {
