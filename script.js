@@ -1,4 +1,4 @@
-// Data produk yang sesuai dengan tabel Supabase lu
+// Data produk yang disesuaikan
 const products = [
     {
         id: 1,
@@ -7,7 +7,7 @@ const products = [
         sold: "1.2k+ Terjual",
         rating: "4.7 (86)",
         badge: "ANDROID",
-        imageColor: "#8b5cf6", // Warna ungu ala Drip Client
+        imageUrl: "drip.jpg", 
         imageText: "DRIP"
     },
     {
@@ -17,7 +17,7 @@ const products = [
         sold: "219 Terjual",
         rating: "5.0 (8)",
         badge: "ANDROID",
-        imageColor: "#ec4899", // Warna pink ala HG
+        imageColor: "#ec4899", 
         imageText: "HG"
     }
 ];
@@ -38,11 +38,19 @@ products.forEach(product => {
     const card = document.createElement('div');
     card.className = 'card';
     
+    // LOGIKA UNTUK MENAMPILKAN GAMBAR ATAU KOTAK WARNA
+    let imageHTML = '';
+    if (product.imageUrl) {
+        imageHTML = `<img src="${product.imageUrl}" alt="${product.name}" class="card-img" style="object-fit: cover;">`;
+    } else {
+        imageHTML = `<div class="card-img" style="background-color: ${product.imageColor}; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+            ${product.imageText}
+        </div>`;
+    }
+    
     // Bikin card HTML-nya
     card.innerHTML = `
-        <div class="card-img" style="background-color: ${product.imageColor}; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-            ${product.imageText}
-        </div>
+        ${imageHTML}
         <div class="card-body">
             <div class="card-title">${product.name}</div>
             <div class="card-stats">⭐ ${product.rating} • ${product.sold}</div>
@@ -54,4 +62,3 @@ products.forEach(product => {
     
     productList.appendChild(card);
 });
-
