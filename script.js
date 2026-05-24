@@ -6,7 +6,16 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 async function fetchProducts() {
     const { data: products, error } = await supabase.from('products').select('*')
-    if (error) { console.error('Error:', error); return }
+    
+    if (error) {
+        alert('Error Supabase: ' + error.message)
+        return
+    }
+
+    if (!products || products.length === 0) {
+        alert('Database kosong, belum ada produk')
+        return
+    }
 
     const productList = document.getElementById('product-list')
     productList.innerHTML = ''
@@ -19,25 +28,11 @@ async function fetchProducts() {
             <div class="card-body">
                 <div class="card-title">${product.name}</div>
                 <div class="card-price">Rp ${product.price.toLocaleString()}</div>
-                <button class="btn-buy" onclick="createTransaction(${product.id})">Beli Sekarang</button>
+                <button class="btn-buy" onclick="alert('Beli ${product.name}')">Beli Sekarang</button>
             </div>
         `
         productList.appendChild(card)
     })
-}
-
-// Fungsi buat nambahin transaksi ke database
-window.createTransaction = async (productId) => {
-    const trxId = 'TRX-' + Date.now() // Bikin ID unik
-    const { data, error } = await supabase
-        .from('transactions')
-        .insert([{ trx_id: trxId, product_id: productId, status: 'PENDING' }])
-
-    if (error) {
-        alert('Gagal buat pesanan: ' + error.message)
-    } else {
-        alert('Pesanan berhasil dibuat! ID: ' + trxId + '\nSilahkan chat admin untuk konfirmasi pembayaran.')
-    }
 }
 
 fetchProducts()
